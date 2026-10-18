@@ -31,7 +31,7 @@ const browser = await browsers[browserName].launch({
 
 try {
   // An optional deployed URL exercises the actual public copy too.
-  for (const url of [pathToFileURL(file).href, localHttp, ...process.argv.slice(2)]) {
+  for (const url of [pathToFileURL(resolve('_output/earth-ai.html')).href, pathToFileURL(file).href, localHttp, ...process.argv.slice(2)]) {
     const context = await browser.newContext({ viewport: { width: 1600, height: 900 } });
     const page = await context.newPage();
     page.setDefaultTimeout(15000);

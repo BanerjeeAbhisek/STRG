@@ -20,6 +20,12 @@ slide format. RStudio invokes `quarto preview` when you click Render. With
 overwrite the portable HTML with a build that blocks OJS on `file://`.
 The website project type ensures this workflow runs the export hook too.
 
+After changing project/render settings, **stop an already-running RStudio
+preview and click Render again**. Quarto keeps the project configuration in a
+running preview process; reusing a session started before this setup can still
+overwrite the HTML with the old behavior. Reloading the browser does not restart
+that render process. There is no need to restart RStudio or close source files.
+
 From a terminal with Quarto on PATH:
 
 ```sh
@@ -94,9 +100,11 @@ npm test
 ```
 
 `test:preview` launches RStudio's exact preview command, requires the export's
-success message, checks both generated files, and stops only its own test server.
-The browser checks then exercise that preview-generated HTML, not just a CLI
-render. To optionally check WebKit (the engine family used by Safari), install
+success message, then requests **two warm re-renders** from the same session and
+checks that neither restores the file-protocol block. It stops only its own test
+server. The browser checks exercise both the exact output path and an isolated
+single-file copy of that preview-generated HTML, not just a CLI render.
+To optionally check WebKit (the engine family used by Safari), install
 it with `npx playwright install webkit` and run
 `STRG_BROWSER_ENGINE=webkit npm test`. This does not change Safari's settings.
 
