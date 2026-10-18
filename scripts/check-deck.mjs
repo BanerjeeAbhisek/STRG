@@ -7,7 +7,9 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-const { chromium } = await import(process.env.STRG_PLAYWRIGHT_MODULE || 'playwright');
+const browsers = await import(process.env.STRG_PLAYWRIGHT_MODULE || 'playwright');
+const browserName = process.env.STRG_BROWSER_ENGINE || 'chromium';
+assert.ok(['chromium', 'webkit'].includes(browserName), 'Unsupported test browser');
 const html = await readFile(resolve('_output/earth-ai.html'));
 assert.deepEqual(html, await readFile(resolve('_output/index.html')), 'Pages and local exports differ');
 assert.match(html.toString(), /name="strg-portable-ojs"/);
@@ -21,8 +23,9 @@ const server = createServer((req, res) => {
 });
 await new Promise(done => server.listen(0, '127.0.0.1', done));
 const localHttp = `http://127.0.0.1:${server.address().port}/STRG/`;
-const browser = await chromium.launch({
+const browser = await browsers[browserName].launch({
   headless: true,
+  timeout: 20000,
   ...(process.env.STRG_BROWSER_PATH ? { executablePath: process.env.STRG_BROWSER_PATH } : {}),
 });
 
@@ -31,6 +34,8 @@ try {
   for (const url of [pathToFileURL(file).href, localHttp, ...process.argv.slice(2)]) {
     const context = await browser.newContext({ viewport: { width: 1600, height: 900 } });
     const page = await context.newPage();
+    page.setDefaultTimeout(15000);
+    page.setDefaultNavigationTimeout(15000);
     const errors = [], external = [], dialogs = [];
     page.on('pageerror', e => errors.push(e.message));
     page.on('dialog', async d => { dialogs.push(d.message()); await d.dismiss(); });
@@ -83,7 +88,11 @@ try {
       assert.deepEqual(errors, [], 'Browser JavaScript errors');
       assert.deepEqual(dialogs, [], 'Unexpected alert');
       assert.deepEqual(external, [], 'Non-embedded resource requests');
-      console.log(`PASS ${url}: actual OJS, six controls, all published target rows, offline, no external resources`);
+      console.log(`PASS ${browserName} ${url}: actual OJS, six controls, all published target rows, offline, no external resources`);
+    } catch (error) {
+      console.error(JSON.stringify({browserName, url, errors, external, dialogs,
+        ojsErrors: await page.locator('.observablehq--error').allTextContents().catch(() => [])}, null, 2));
+      throw error;
     } finally { await context.close(); }
   }
 } finally {

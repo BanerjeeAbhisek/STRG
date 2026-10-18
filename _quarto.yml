@@ -1,5 +1,6 @@
 project:
-  type: default
+  # Required for RStudio's `quarto preview` path to run project post-render hooks.
+  type: website
   output-dir: _output
   render:
     - earth-ai.qmd

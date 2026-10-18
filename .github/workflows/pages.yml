@@ -29,6 +29,8 @@ jobs:
           cache: npm
       - name: Install browser test dependencies
         run: npm ci
+      - name: Verify RStudio-style preview also runs the export
+        run: npm run test:preview
       - name: Install Chromium for offline OJS checks
         run: npx playwright install --with-deps chromium
       - name: Verify direct-file and HTTP interactions

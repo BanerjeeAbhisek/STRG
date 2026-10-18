@@ -14,6 +14,12 @@ paper reference and detailed source/context notes.
 2. Open `earth-ai.qmd` in the **Source** editor.
 3. Click **Render**. Use **Open in Browser** for the full interactive presentation.
 
+The project intentionally uses `type: website` while retaining the Reveal.js
+slide format. RStudio invokes `quarto preview` when you click Render. With
+`type: default`, that preview path can skip project post-render hooks and
+overwrite the portable HTML with a build that blocks OJS on `file://`.
+The website project type ensures this workflow runs the export hook too.
+
 From a terminal with Quarto on PATH:
 
 ```sh
@@ -83,8 +89,16 @@ the build. To run those optional checks locally (Node 20+):
 ```sh
 npm ci
 npx playwright install chromium
+npm run test:preview
 npm test
 ```
+
+`test:preview` launches RStudio's exact preview command, requires the export's
+success message, checks both generated files, and stops only its own test server.
+The browser checks then exercise that preview-generated HTML, not just a CLI
+render. To optionally check WebKit (the engine family used by Safari), install
+it with `npx playwright install webkit` and run
+`STRG_BROWSER_ENGINE=webkit npm test`. This does not change Safari's settings.
 
 Node and Playwright are needed only for tests, not for rendering or viewing.
 
