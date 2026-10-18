@@ -1,0 +1,55 @@
+name: Render and publish slides
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install tested Quarto version
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: '1.9.37'
+      - name: Render self-contained slides with portable OJS
+        run: quarto render
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install browser test dependencies
+        run: npm ci
+      - name: Install Chromium for offline OJS checks
+        run: npx playwright install --with-deps chromium
+      - name: Verify direct-file and HTTP interactions
+        run: npm test
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload rendered presentation
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _output
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,11 @@
+{
+  "name": "strg-earth-ai-slides",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node scripts/check-deck.mjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

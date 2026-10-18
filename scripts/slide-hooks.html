@@ -1,0 +1,21 @@
+<script>
+// Update the presentation chrome when moving between light and dark slides.
+// No dependencies, timers, network access, or changes to Reveal navigation.
+(function () {
+  function syncChrome() {
+    var slide = document.querySelector('.reveal .slides section.present');
+    document.body.classList.toggle('mu-dark', !!slide && slide.classList.contains('dark-slide'));
+    document.body.classList.toggle('mu-cover', !!slide && slide.classList.contains('cover'));
+  }
+  function bind() {
+    if (window.Reveal && typeof window.Reveal.on === 'function') {
+      window.Reveal.on('ready', syncChrome);
+      window.Reveal.on('slidechanged', syncChrome);
+      syncChrome();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bind, {once: true});
+  } else { bind(); }
+})();
+</script>

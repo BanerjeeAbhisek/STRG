@@ -1,0 +1,43 @@
+project:
+  type: default
+  output-dir: _output
+  render:
+    - earth-ai.qmd
+  post-render:
+    - scripts/portable-ojs.ts
+
+format:
+  revealjs:
+    theme: [default, theme/mizzou.scss]
+    css: theme/slides.css
+    width: 1600
+    height: 900
+    margin: 0.02
+    center: false
+    transition: fade
+    background-transition: fade
+    slide-number: c/t
+    show-slide-number: all
+    controls: true
+    controls-layout: bottom-right
+    progress: true
+    history: true
+    hash: true
+    navigation-mode: linear
+    keyboard: true
+    overview: true
+    touch: true
+    mouse-wheel: false
+    help: true
+    menu: true
+    chalkboard: false
+    footer: "UNIVERSITY OF MISSOURI / STATISTICS AND DATA SCIENCE"
+    include-after-body: scripts/slide-hooks.html
+    embed-resources: true
+    html-math-method: katex
+
+execute:
+  echo: false
+  warning: false
+
+lang: en

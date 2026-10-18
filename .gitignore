@@ -1,0 +1,14 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+
+# Quarto builds and preview caches
+/.quarto/
+/_output/
+/*_files/
+/.preview/
+/node_modules/
+.DS_Store
+
+**/*.quarto_ipynb

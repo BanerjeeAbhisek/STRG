@@ -1,0 +1,92 @@
+/* Figure and interaction styling, separate from the Reveal Sass theme. */
+.reveal .slide .observablehq { margin: 0; }
+.reveal .slide .observablehq > svg { max-width: 100%; height: auto; }
+.reveal .slide .cell { margin: 0; }
+.reveal .slide .cell-output-display { margin: 0; }
+.reveal .slide .observablehq--error {
+  font: 20px "SFMono-Regular", monospace;
+  color: #6e0026;
+}
+.figure-control {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: 600;
+  color: #000;
+}
+.figure-control select {
+  width: 100%;
+  max-width: 390px;
+  padding: 12px 40px 12px 14px;
+  border: 1px solid #777;
+  border-bottom: 4px solid #FDB719;
+  border-radius: 0;
+  background: #fff;
+  color: #000;
+  font: inherit;
+  cursor: pointer;
+}
+.figure-control select:focus-visible,
+.figure-control input:focus-visible {
+  outline: 3px solid #000;
+  outline-offset: 5px;
+}
+.figure-control.range-control {
+  flex-direction: row;
+  align-items: center;
+  gap: 24px;
+  margin: 0 0 26px 10px;
+}
+.figure-control input[type="range"] {
+  width: 350px;
+  accent-color: #000;
+  cursor: pointer;
+}
+.figure-control output { min-width: 2ch; font-variant-numeric: tabular-nums; }
+.benchmark-summary { margin-top: 30px; }
+.reveal .slide .summary-number {
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 100px;
+  letter-spacing: -0.07em;
+  line-height: 1;
+}
+.reveal .slide .summary-label {
+  display: block;
+  margin-top: 16px;
+  font-size: 21px;
+  line-height: 1.4;
+}
+.reveal .slide .summary-count {
+  display: block;
+  margin-top: 12px;
+  font-size: 19px;
+  color: #333;
+}
+.reveal .slide .uncertainty-summary {
+  padding: 18px 0;
+  border-top: 5px solid #FDB719;
+  margin: 28px 0;
+  font-size: 24px;
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums;
+}
+.reveal .slide .uncertainty-summary strong { font-size: 30px; font-weight: 650; }
+.paper-chart {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  font-family: "Avenir Next", Avenir, "Segoe UI", Arial, sans-serif;
+}
+.reveal .slide .crisis-narrative .figure-control { font-size: 18px; }
+.reveal .slide .crisis-narrative .figure-control select { font-size: 18px; }
+.reveal .slide .results-narrative .summary-number { font-size: 88px; }
+.reveal .slide .results-narrative .summary-label { font-size: 22px; }
+.reveal .slide .paper-chart { user-select: text; }
+@media print {
+  .figure-control { break-inside: avoid; }
+  .reveal .slide .source-line { position: absolute; }
+}
