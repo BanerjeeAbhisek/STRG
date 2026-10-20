@@ -197,7 +197,7 @@ Source: https://arxiv.org/pdf/2510.18318v4, pp. 4–5, Figure 2.
 ## Evidence from object detection {#detection}
 
 ::: {.slide-intro}
-Specialization improves zero-shot detection on both benchmarks.
+Specialization improves zero-shot detection. A few-shot method provides further adaptation.
 :::
 
 ::: {.results-layout}
@@ -207,12 +207,12 @@ Specialization improves zero-shot detection on both benchmarks.
 viewof detectionDataset = figures.selector("Detection dataset", ["DOTA", "DIOR"], "DOTA")
 ```
 
-### Zero-shot detection
+### Two evaluation settings
 
-No additional labeled examples for adaptation to the benchmark.
+Zero-shot detection and few-shot adaptation have different supervision.
 
 ::: {.side-callout}
-**mAP (%)** summarizes detection performance. Higher is better.
+FLAME uses **30 labeled classification examples per category**.
 :::
 
 :::
@@ -226,20 +226,17 @@ figures.detectionChart(paper.detection, detectionDataset)
 :::
 
 ::: {.source-line}
-Bell et al., p. 10, Table 3. Published mAP (%) values; zero-shot results only.
+Bell et al., p. 10, Table 3. Published mAP (%) values; zero-shot and few-shot comparisons shown separately.
 :::
 
 ::: {.notes}
 Pacing: 1:06. Cumulative: 6:18.
 Start with DOTA: the generic OWL-ViT-v2 baseline scores 13.77 mAP and the
-remote-sensing version scores 31.83. Switch to DIOR to show that the pattern holds
-there: 14.98 for the baseline and 29.39 for the remote-sensing version. DOTA and
-DIOR are public remote-sensing object-detection benchmarks. Zero-shot means no
-additional labeled examples for adapting the detector to the benchmark; the
-models have already been pretrained. mAP summarizes precision-recall performance
-across object categories, not the percentage of all objects correctly detected.
-These are object detection results, not evidence that every imagery task improves
-by the same amount. This slide presents only the zero-shot rows of Table 3.
+remote-sensing version scores 31.83. In the few-shot setting, the FLAME variant
+scores 53.96 versus 45.88 for SIoU. Switch to DIOR to show that the pattern holds
+there: 14.98, 29.39, 52.85, and 53.21, respectively. Avoid comparing few-shot to
+zero-shot as if the supervision budget were identical. These are object detection
+results, not evidence that every imagery task improves by the same amount.
 Additional classification, retrieval, and fine-tuned backbone results are in
 Tables 1–2 and 4–5. No uncertainty estimates are supplied in Table 3.
 Source: https://arxiv.org/pdf/2510.18318v4, p. 10, Table 3.

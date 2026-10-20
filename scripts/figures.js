@@ -48,22 +48,21 @@ export function selector(labelText, options, initial) {
 }
 export function detectionChart(data, dataset) {
   const values = data[dataset];
-  // Preserve the complete published table in JSON, but show only zero-shot rows.
-  const rows = data.models.map((model, i) => ({model, value: values[i], regime: data.regimes[i]}))
-    .filter(row => row.regime === 'Zero-shot');
-  const svg = chart(980, 480, `${dataset} zero-shot object detection`,
-    rows.map(row => `${row.regime} ${row.model}: ${row.value} percent mAP`).join('. '));
-  const left = 345, right = 900, x = v => left + v / 40 * (right - left);
-  ticks(svg, [0, 10, 20, 30, 40], x, 80, 405, String);
-  rows.forEach(({model, value}, i) => {
-    const y = 135 + i * 145;
-    const fill = i === 1 ? GOLD : '#777';
-    svg.append(tip(node('rect', {x: left, y, width: x(value) - left, height: 52, fill}),
-      `${model}: ${value.toFixed(2)}% mAP (Zero-shot)`));
-    text(svg, left - 20, y + 34, model, {'text-anchor': 'end', 'font-size': 23});
-    text(svg, x(value) + 12, y + 35, value.toFixed(2), {'font-size': 24, 'font-weight': 650});
+  const svg = chart(980, 480, `${dataset} object detection`,
+    data.models.map((m, i) => `${data.regimes[i]} ${m}: ${values[i]} percent mAP`).join('. '));
+  const left = 345, right = 900, x = v => left + v / 60 * (right - left);
+  ticks(svg, [0, 10, 20, 30, 40, 50, 60], x, 45, 405, String);
+  data.models.forEach((m, i) => {
+    const y = 78 + i * 80 + (i > 1 ? 22 : 0);
+    const fill = i === 1 || i === 3 ? GOLD : '#777';
+    svg.append(tip(node('rect', {x: left, y, width: x(values[i]) - left, height: 42, fill}),
+      `${m}: ${values[i].toFixed(2)}% mAP (${data.regimes[i]})`));
+    text(svg, left - 20, y + 28, m, {'text-anchor': 'end', 'font-size': 23});
+    text(svg, x(values[i]) + 12, y + 29, values[i].toFixed(2), {'font-size': 24, 'font-weight': 650});
   });
+  line(svg, 20, 244, 945, 244, {stroke: '#333', 'stroke-dasharray': '5 5'});
   text(svg, 20, 62, 'ZERO-SHOT', {'font-size': 17, 'font-weight': 700});
+  text(svg, 20, 275, 'FEW-SHOT', {'font-size': 17, 'font-weight': 700});
   text(svg, left, 471, 'mAP (%) · higher is better', {'font-size': 20});
   return svg;
 }
