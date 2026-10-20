@@ -64,8 +64,13 @@ try {
         }, { slide, expected });
       }
 
-      await select('detection', 'Detection dataset', 'DIOR', ['DIOR', '14.98', '29.39', '53.21']);
+      await select('detection', 'Detection dataset', 'DIOR', ['DIOR', '14.98', '29.39']);
       assert.equal(await page.evaluate(() => window._ojs.runtime.value('detectionDataset')), 'DIOR');
+      assert.equal(await page.locator('#detection svg rect').count(), 2, 'Only the two zero-shot models should be plotted');
+      assert.doesNotMatch(await page.locator('#detection').textContent(), /FLAME|few-shot|SIoU/i);
+      assert.doesNotMatch(await page.locator('#detection .paper-chart').getAttribute('aria-label'), /FLAME|Few-shot|SIoU|53\.21/);
+      await select('detection', 'Detection dataset', 'DOTA', ['DOTA', '13.77', '31.83']);
+      assert.equal(await page.locator('#detection svg rect').count(), 2);
       await select('country-transfer', 'Transfer metric', 'mape', ['MAPE', '28.03', '19.03']);
       for (const [slide, label, results] of [
         ['fema-results', 'FEMA target', data.fusion.fema],
