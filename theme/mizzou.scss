@@ -288,6 +288,7 @@ body.mu-dark .reveal .footer,
 body.mu-dark .reveal .slide-number { color: #fff; }
 body.mu-dark .reveal .controls { color: var(--mu-gold); }
 body.mu-cover .reveal .footer { display: none !important; }
+body.mu-thank-you .reveal .footer { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal * { transition: none !important; animation: none !important; }
@@ -376,8 +377,12 @@ body.mu-cover .reveal .footer { display: none !important; }
 .reveal .slide .dark-summary { display: flex; align-items: center; gap: 35px; margin-top: 35px; border-top: 1px solid #777; padding-top: 22px; }
 .reveal .slide .dark-summary strong { color: var(--mu-gold); font: 78px Georgia, serif; }
 .reveal .slide .dark-summary p { font-size: 27px; margin: 0; }
+.reveal .slide#damage-pipeline .damage-pipeline { margin-top: 24px; }
+.reveal .slide#damage-pipeline .dark-summary { margin-top: 20px; padding-top: 16px; }
+.reveal .slide#damage-pipeline .damage-uncertainty { margin: 18px 0 0; }
 .reveal .slide .wide-paper-figure { margin: 12px 0 0; }
 .reveal .slide .wide-paper-figure img { width: 100%; height: 440px; object-fit: contain; max-width: none; max-height: none; margin: 0; }
+.reveal .slide#ian-results .wide-paper-figure img { height: 426px; }
 .reveal .slide .figure-warning { font-size: 22px; line-height: 1.4; margin-top: 18px; border-left: 5px solid var(--mu-gold); padding-left: 20px; }
 .reveal .slide .cholera-inputs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 45px; margin-top: 35px; }
 .reveal .slide .cholera-inputs > div { border-top: 5px solid var(--mu-gold); padding-top: 24px; }
@@ -422,6 +427,11 @@ body.mu-cover .reveal .footer { display: none !important; }
 .reveal .slide .limitations-list span { font: 39px Georgia, serif; }
 .reveal .slide .limitations-list h3 { font-size: 29px; margin: 0; }
 .reveal .slide .limitations-list p { font-size: 25px; margin: 0; }
+.reveal .slide#limitations .limitations-list > div { padding: 16px 0; }
 .reveal .slide.closing .conclusion-title { font-size: 68px; line-height: 1.22; margin-top: 55px; }
+.reveal .slide.closing .closing-summary { margin-top: 30px; max-width: 1330px; }
+.reveal .slide.closing .closing-summary p { font-size: 30px; line-height: 1.4; margin: 0 0 20px; }
+.reveal .slide.closing .closing-caveat { font-size: 27px; line-height: 1.4; color: var(--mu-gold); margin-top: 32px; }
 .reveal .slide .closing-question { font-size: 29px; line-height: 1.4; border-left: 5px solid var(--mu-gold); padding-left: 25px; max-width: 1070px; margin-top: 42px; }
 .reveal .slide.closing .closing-affiliation { margin-top: 40px; }
+.reveal .slide.thank-you-slide .thank-you-title { font-size: 128px; line-height: 1.1; margin-top: 180px; }

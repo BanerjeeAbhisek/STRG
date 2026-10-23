@@ -85,7 +85,8 @@ export function transferChart(data, metric) {
       text(svg, x(value), y - 16, value.toFixed(2), {'text-anchor': 'middle', 'font-size': 21, 'font-weight': 650});
     });
   });
-  text(svg, 25, 396, isR2 ? 'R² · higher is better. Population = Population Dynamics Foundations.' : 'MAPE (%) · lower is better. Population = Population Dynamics Foundations.', {'font-size': 21});
+  text(svg, 25, 370, isR2 ? 'R² · higher is better. Population = Population Dynamics Foundations.' : 'MAPE (%) · lower is better. Population = Population Dynamics Foundations.', {'font-size': 21});
+  text(svg, 25, 396, 'IDW = Inverse Distance Weighting. RBF = Radial Basis Function interpolation.', {'font-size': 21});
   return svg;
 }
 export function targetOptions(data) {

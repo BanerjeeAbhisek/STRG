@@ -6,6 +6,7 @@
     var slide = document.querySelector('.reveal .slides section.present');
     document.body.classList.toggle('mu-dark', !!slide && slide.classList.contains('dark-slide'));
     document.body.classList.toggle('mu-cover', !!slide && slide.classList.contains('cover'));
+    document.body.classList.toggle('mu-thank-you', !!slide && slide.id === 'thank-you');
   }
   function bind() {
     if (window.Reveal && typeof window.Reveal.on === 'function') {

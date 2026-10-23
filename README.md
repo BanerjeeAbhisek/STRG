@@ -3,8 +3,8 @@
 A custom Mizzou-themed Quarto Reveal.js presentation for the Department of
 Statistics and Data Science, University of Missouri–Columbia.
 
-The presentation contains **24 slides** based on the agreed paper-discussion
-outline. Speaker notes total **28 minutes**, with two minutes of buffer or
+The presentation contains **20 slides** based on the agreed paper-discussion
+outline. Speaker notes total **22 minutes**, with eight minutes of buffer or
 discussion for a half-hour slot. Every substantive slide includes a visible
 paper reference and detailed source/context notes.
 
@@ -88,7 +88,7 @@ opened directly.
 
 Before publishing, the workflow also tests a single isolated HTML file via
 `file://` with the browser offline, then via HTTP under `/STRG/`. It checks all
-six chart controls, all published FEMA/health rows, images, and the actual OJS
+four chart controls, all published FEMA/health rows, images, and the actual OJS
 runtime. Additional resource requests, JavaScript errors, or alert boxes fail
 the build. To run those optional checks locally (Node 20+):
 
@@ -133,12 +133,11 @@ columns, equations, images, and `{ojs}` cells work inside slides. Layout classes
 include `.cover`, `.closing`, `.image-layout`, `.results-layout`, `.temporal-layout`,
 and `.helene-layout`. Keep content short enough for the fixed 16:9 canvas.
 
-Six genuine OJS charts support dataset, metric, target, category, and interval
-selection. The FEMA and CDC controls expose all 20 and 21 target rows. The Q&A
-plot uses the published 95% intervals. The crisis plot retains all ten prompts
-and shows intervals exactly as reported, including endpoints outside [0, 1].
-Its reported mean excludes prompt 9, following Table 12. All chart values live
-in the JSON file rather than being mixed with plotting code.
+Four genuine OJS charts support dataset, metric, and target selection. The FEMA
+and CDC controls expose all 20 and 21 target rows. The Q&A and crisis-response
+evaluation slides have been removed from the talk; their published values remain
+in the JSON file for provenance. All chart values live in that file rather than
+being mixed with plotting code.
 
 The charts use native browser controls and SVG through a local JavaScript module,
 so they work without external JavaScript CDNs. Figures 5 and 6 remain original
@@ -155,9 +154,10 @@ demonstration, not a live forecast or a new GIS computation.
 | --- | --- | ---: |
 | 1–4 | Motivation and framework | 4 |
 | 5–10 | Specialized models and their evidence | 7 |
-| 11–16 | Combining models and predictive applications | 8 |
-| 17–21 | Agent workflow and evaluation | 6 |
-| 22–24 | Interpretation, limitations, and discussion | 3 |
+| 11–15 | Combining models and predictive applications | 7 |
+| 16–17 | Agent workflow and Helene demonstration | 2 |
+| 18–19 | Limitations and summary | 2 |
+| 20 | Thank you | 0 |
 
 Each slide's speaker notes include an individual time budget, cumulative time,
 talking points, source pages, and caveats needed to interpret the results.

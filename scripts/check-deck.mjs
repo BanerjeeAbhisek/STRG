@@ -49,10 +49,17 @@ try {
     try {
       await page.goto(url);
       await page.waitForFunction(() => window.Reveal?.isReady());
-      await page.waitForFunction(() => document.querySelectorAll('.paper-chart').length === 6);
+      await page.waitForFunction(() => document.querySelectorAll('.paper-chart').length === 4);
       await context.setOffline(true);
-      assert.equal(await page.locator('.reveal .slides > section').count(), 24);
-      assert.equal(await page.locator('.reveal .slides .notes').count(), 24);
+      assert.equal(await page.locator('.reveal .slides > section').count(), 20);
+      assert.equal(await page.locator('.reveal .slides .notes').count(), 20);
+      assert.equal(await page.evaluate(() => Reveal.getSlides().at(-1).id), 'thank-you');
+      assert.equal(await page.locator('.reveal .slides #cholera').count(), 0);
+      assert.equal(await page.locator('#qa-design, #qa-results, #crisis-results, #interpretation').count(), 0);
+      assert.equal(await page.evaluate(() => {
+        const slides = Reveal.getSlides();
+        return slides[slides.findIndex(s => s.id === 'helene-walkthrough') + 1]?.id;
+      }), 'limitations');
       assert.equal(await page.evaluate(async () => (await window._ojs.runtime.value('paper')).qa.categories.length), data.qa.categories.length);
 
       async function select(slide, label, value, expected) {
@@ -76,19 +83,12 @@ try {
         }
         await page.getByLabel(label, { exact: true }).selectOption('mean');
       }
-      for (const row of data.qa.categories) {
-        await select('qa-results', 'Q&A category', row.id, [row.label, ...row.means.map(v => v.toFixed(2))]);
-      }
-      await page.evaluate(() => Reveal.slide(Reveal.getSlides().findIndex(s => s.id === 'crisis-results')));
-      const intervals = await page.locator('#crisis-results svg line').count();
-      await page.getByLabel('Crisis intervals').selectOption('no');
-      await page.waitForFunction(n => document.querySelectorAll('#crisis-results svg line').length === n - 20, intervals);
       assert.deepEqual(await page.locator('.observablehq--error').allTextContents(), []);
       assert.equal(await page.locator('.reveal .slides img').evaluateAll(images => images.every(i => i.complete && i.naturalWidth > 0)), true);
       assert.deepEqual(errors, [], 'Browser JavaScript errors');
       assert.deepEqual(dialogs, [], 'Unexpected alert');
       assert.deepEqual(external, [], 'Non-embedded resource requests');
-      console.log(`PASS ${browserName} ${url}: actual OJS, six controls, all published target rows, offline, no external resources`);
+      console.log(`PASS ${browserName} ${url}: actual OJS, four controls, all published target rows, offline, no external resources`);
     } catch (error) {
       console.error(JSON.stringify({browserName, url, errors, external, dialogs,
         ojsErrors: await page.locator('.observablehq--error').allTextContents().catch(() => [])}, null, 2));

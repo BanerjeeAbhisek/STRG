@@ -1,6 +1,6 @@
 ---
 pagetitle: "Earth AI | STRG | University of Missouri"
-description: "A 24-slide, paper-grounded discussion of Earth AI for Statistics and Data Science at Mizzou."
+description: "A 20-slide, paper-grounded discussion of Earth AI for Statistics and Data Science at Mizzou."
 ---
 
 ## Earth AI {.cover .dark-slide background-color="#000000"}
@@ -55,8 +55,8 @@ Pacing: 0:30. Cumulative: 0:30.
 Introduce this as a discussion of the February 2026 v4 paper by Aaron Bell and
 coauthors from Google Research and collaborating Google teams. Our three questions
 are what the models represent, whether combining them helps prediction, and how
-the authors evaluate the agent that uses them. The presentation contains 24 slides,
-with 28 minutes of planned material and two minutes of buffer/discussion.
+the agent uses these models. The presentation contains 20 slides,
+with 22 minutes of planned material and eight minutes of buffer/discussion.
 Paper: https://arxiv.org/pdf/2510.18318v4, p. 1.
 Cover photography: Nicholas Andrusisian / University of Missouri, from the
 Statistics and Data Science department homepage, https://stat.missouri.edu/.
@@ -414,7 +414,7 @@ Source: https://arxiv.org/pdf/2510.18318v4, pp. 16–18, 37.
 ## FEMA risk prediction {#fema-results}
 
 ::: {.slide-intro}
-Complementary features help on most of the 20 reported targets.
+Federal Emergency Management Agency (FEMA): combined features help on most of 20 targets.
 :::
 
 ::: {.results-layout}
@@ -513,6 +513,7 @@ Forecast uncertainty passes through a building-damage classifier.
   <div class="damage-stage fragment"><span class="stage-index">03</span><h3>Damage model</h3><p>Gradient-boosted classifier for each forecast member</p></div>
 </div>
 <div class="dark-summary fragment"><strong>50</strong><p>sets of building predictions<br>and a distribution of damaged-building counts</p></div>
+<p class="small-copy damage-uncertainty fragment">This is useful because uncertainty about the hurricane’s path translates into uncertainty about its impact. However, this distribution mainly reflects differences between the cyclone scenarios, rather than every possible modeling error.</p>
 ```
 
 ::: {.source-line}
@@ -540,7 +541,7 @@ Study subset: **2,575 predicted** and **2,496 observed** damaged buildings.
 
 ```{=html}
 <figure class="wide-paper-figure"><img src="assets/paper/figure-06.png" alt="Original Figure 6: forecast hurricane tracks, the distribution of predicted damaged-building counts, and ensemble precision, recall, and F1 boxplots"></figure>
-<p class="figure-warning">About 3% aggregate count error. One retrospective event, one lead time, and a subset of affected buildings.</p>
+<p class="figure-warning"><strong>Precision:</strong> fraction of predicted-damaged buildings truly damaged. <strong>Recall:</strong> fraction of damaged buildings identified. <strong>F1:</strong> harmonic mean of precision and recall.</p>
 ```
 
 ::: {.source-line}
@@ -563,40 +564,10 @@ below 4% per event in the dataset, making raw accuracy an unhelpful headline.
 Source: https://arxiv.org/pdf/2510.18318v4, pp. 19, 37–38.
 :::
 
-## Cholera forecasting in the DRC {#cholera}
-
-::: {.slide-intro}
-TimesFM combines past case counts with regional context and weather covariates.
-:::
-
-```{=html}
-<div class="cholera-inputs"><div><h3>Weekly cases</h3><p>Historical observations<br>24 DRC provinces</p></div><div><h3>Population embeddings</h3><p>Static numerical<br>province covariates</p></div><div><h3>Weather forecasts</h3><p>Precipitation<br>and temperature</p></div></div>
-<div class="model-strip"><strong>TimesFM 2.0</strong><span>National and regional cholera forecasts</span></div>
-<div class="metric-pair"><div><strong>35.4%</strong><p>Lower RMSE than Prophet<br>TimesFM baseline, national, 20 weeks</p></div><div><strong>5%</strong><p>Lower regional RMSE than baseline TimesFM<br>with population embeddings</p></div></div>
-```
-
-::: {.source-line}
-Bell et al., pp. 19–20. Different comparisons and aggregation levels; the percentages are not additive.
-:::
-
-::: {.notes}
-Pacing: 1:00. Cumulative: 19:00.
-The authors collaborate with WHO AFRO using weekly cholera records from 24
-provinces. The TimesFM baseline uses historical case counts. National RMSE at a
-20-week horizon improves 35.4% over Prophet. At regional level, adding population
-embeddings reduces RMSE by 5% against baseline TimesFM. The text also reports
-32.7% performance improvement after adding dynamic weather forecasts, but gives
-less experimental detail; do not combine it with the two displayed percentages
-or fabricate a forecast curve. The model uses static province embeddings and
-dynamic temperature and precipitation covariates. These are separate reported
-comparisons, not a single common-scale ablation chart.
-Source: https://arxiv.org/pdf/2510.18318v4, pp. 19–20.
-:::
-
 ## How the geospatial agent operates {#agent-loop}
 
 ::: {.slide-intro}
-Gemini orchestrates data access, model calls, and analysis through ADK.
+**Gemini coordinates the workflow**, using Google’s **Agent Development Kit (ADK)** to connect the components.
 :::
 
 ```{=html}
@@ -609,7 +580,7 @@ Bell et al., pp. 7–9, Figure 4; Appendix A.3.1, pp. 38–39. Figure cropped to
 :::
 
 ::: {.notes}
-Pacing: 1:12. Cumulative: 20:12.
+Pacing: 1:12. Cumulative: 19:12.
 The agent uses Google's Agent Development Kit and Gemini. The framework's
 closed loop chooses operations, calls models or data tools, and reflects on
 results. Some domains are expert agents, such as demographics, weather, model
@@ -641,7 +612,7 @@ Bell et al., pp. 22–23, Figure 7. Published demonstration, not a live forecast
 :::
 
 ::: {.notes}
-Pacing: 1:00. Cumulative: 21:12.
+Pacing: 1:00. Cumulative: 20:12.
 Return to the opening question. The red polygon represents predicted
 hurricane-force winds from the cyclone model. County populations come from the
 US Census Bureau through Data Commons. The agent retrieves geometries, applies
@@ -653,172 +624,16 @@ it does not independently validate the forecast's meteorological accuracy.
 Source: https://arxiv.org/pdf/2510.18318v4, pp. 22–23, Figure 7.
 :::
 
-## How the Q&A benchmark is scored {#qa-design}
-
-```{=html}
-<div class="benchmark-design">
-  <div class="benchmark-size"><strong>100</strong><p>questions with verified reference answers</p><div class="split-count"><span><b>50</b> descriptive / retrieval</span><span><b>50</b> analytical / relational</span></div></div>
-  <div class="benchmark-rules"><h3>Partial-credit answer matching</h3><p>Text: ROUGE-L F1</p><p>Numbers: score based on relative error<br>Full credit within ±10% of the reference</p><p class="side-callout">Five runs. Baselines also have Search, Maps grounding, and Code Execution.</p></div>
-</div>
-```
-
-::: {.source-line}
-Bell et al., pp. 20–21; Appendix A.3.2–A.3.3, pp. 40–42. Scoring ignores surrounding answer prose.
-:::
-
-::: {.notes}
-Pacing: 1:06. Cumulative: 22:18.
-The 100 questions cover places (30), people and communities (40), weather and
-environment (20), and multiple domains (10). Each domain is equally split across
-the two question categories. Reference answers come from direct API or dataset
-queries, reviewed by geospatial experts. Only the filled blanks are scored.
-Text uses ROUGE-L F1. For numbers, relative errors within 10% receive one;
-errors above 100% receive zero; otherwise the score is one minus the absolute
-percentage error. Thus 0.82 does not mean 82 exact answers out of 100. The
-baseline agents use Gemini 2.5 Flash or Pro within ADK with built-in Search,
-Maps grounding, and Code Execution, but lack custom geospatial tools.
-Source: https://arxiv.org/pdf/2510.18318v4, pp. 20–21, 40–42.
-:::
-
-## Agent performance on retrieval and analysis {#qa-results}
-
-::: {.slide-intro}
-The specialized agent has higher scores in both categories.
-:::
-
-::: {.results-layout}
-::: {.results-narrative}
-
-```{ojs}
-viewof qaCategory = figures.selector("Q&A category", paper.qa.categories.map(d => ({value: d.id, label: d.label})), "overall")
-```
-
-### Analytical tasks
-
-Pro: **0.33**<br>Geospatial agent: **0.74**
-
-::: {.side-callout}
-Intervals describe variation across **five runs** of this benchmark.
-:::
-
-:::
-::: {.results-figure}
-
-```{ojs}
-figures.qaChart(paper.qa, qaCategory)
-```
-
-:::
-:::
-
-::: {.source-line}
-Bell et al., p. 21, Table 11. Points and published 95% confidence intervals. Scores are not exact-answer accuracy.
-:::
-
-::: {.notes}
-Pacing: 1:24. Cumulative: 23:42.
-Overall means are 0.39 for Flash, 0.50 for Pro, and 0.82 for the geospatial
-agent. Switch to descriptive retrieval: 0.60, 0.67, and 0.91. Analytical
-questions are harder for the baselines: 0.17, 0.33, and 0.74. These results support
-the value of the specialized system on the chosen tasks. The comparison changes
-the tool access and agent configuration as well as the data available, so it
-does not isolate an improvement in the underlying LLM's intrinsic reasoning.
-Intervals are the authors' reported 95% intervals across five runs; they do not
-establish uncertainty for every future region, disaster, or query distribution.
-Source: https://arxiv.org/pdf/2510.18318v4, p. 21, Table 11.
-:::
-
-## Evaluation on crisis-response prompts {#crisis-results}
-
-::: {.crisis-layout}
-::: {.crisis-plot}
-
-```{ojs}
-figures.crisisChart(paper.crisis, crisisIntervals)
-```
-
-:::
-::: {.crisis-narrative}
-
-```{ojs}
-viewof crisisIntervals = figures.selector("Crisis intervals", [{value: "yes", label: "Show published 95% intervals"}, {value: "no", label: "Show means only"}], "yes")
-```
-
-### 10 prompts<br>10 runs each
-
-Gemini 2.5 Flash rates rubric compliance on a five-level scale.
-
-::: {.side-callout}
-Reported mean, excluding #9:<br>Pro **0.38**<br>Agent **0.87**
-:::
-
-:::
-:::
-
-::: {.source-line}
-Bell et al., p. 22, Table 12; pp. 52–53. *Prompt 9 excluded from the reported mean. Intervals retained as published, without clipping to [0, 1].
-:::
-
-::: {.notes}
-Pacing: 1:18. Cumulative: 25:00.
-This is a different benchmark from the 100-question evaluation. Ten constrained
-crisis prompts combine predictive models with demographic or geospatial tasks.
-Each prompt runs ten times. A Gemini 2.5 Flash autorater checks a custom rubric
-and maps five Likert-style levels to 0, .25, .5, .75, and 1. The plotted intervals
-are exactly the published means plus/minus interval widths. Some extend beyond
-the bounded score range; do not silently truncate or reinterpret them. Prompt 9
-has zero for Pro because it could not find authoritative 2024 labor statistics.
-Table 12 excludes that prompt from the reported mean: 0.38 versus 0.87.
-Rubric compliance is not direct validation of the underlying forecast accuracy.
-Source: https://arxiv.org/pdf/2510.18318v4, pp. 21–22, 48, 52–53.
-:::
-
-## What the evaluation establishes {#interpretation}
-
-::: {.slide-intro}
-Our statistical reading: each result answers a different question.
-:::
-
-```{=html}
-<table class="evidence-table">
-  <thead><tr><th>Reported quantity</th><th>What it measures</th><th>Limit of the interpretation</th></tr></thead>
-  <tbody>
-    <tr><td>FEMA / health R²</td><td>Prediction of tract-level targets in held-out counties</td><td>Predictive association does not identify causal effects.</td></tr>
-    <tr><td>Ian count error</td><td>Aggregate damage count in one study subset</td><td>A close total does not identify the correct buildings.</td></tr>
-    <tr><td>Q&A score</td><td>Partial-credit match to reference answers</td><td>Repeated runs do not test every new query distribution.</td></tr>
-    <tr><td>Crisis rubric score</td><td>Compliance with specified response criteria</td><td>A plausible method description can be difficult to verify.</td></tr>
-  </tbody>
-</table>
-```
-
-::: {.source-line}
-Interpretation of Bell et al., Tables 9–12, Figure 6, Appendix A.2.2 and A.3.3–A.3.4. See pp. 17–22, 38, 42, 48, 52–53.
-:::
-
-::: {.notes}
-Pacing: 1:12. Cumulative: 26:12.
-This slide is our statistical reading, not an additional experiment reported
-by the authors. Align the unit of the claim with the unit of evaluation.
-Embedding experiments test target prediction in held-out counties. The Ian
-count describes aggregate error in a particular subset and initialization.
-Q&A scores summarize partial-credit answer matching, while crisis scores
-summarize an automated rubric. Appendix p. 48 explicitly warns that rubric
-evaluation can struggle to verify whether the system actually analyzed data
-or synthesized secondary sources. The paper also acknowledges the need for
-stronger generalization tests. Keep these distinctions when interpreting gains.
-Source: https://arxiv.org/pdf/2510.18318v4, pp. 17–22, 38, 42, 48, 52–53.
-:::
-
 ## Limitations acknowledged by the authors {#limitations}
 
 ```{=html}
 <div class="limitations-list">
-  <div><span>01</span><h3>Imagery coverage</h3><p>Current focus on high-resolution RGB. Temporal downstream tasks remain untested.</p></div>
-  <div><span>02</span><h3>Spatial and temporal alignment</h3><p>Combining different resolutions and regional units remains a technical challenge.</p></div>
-  <div><span>03</span><h3>Population data gaps</h3><p>Interpolation tests need to cover systematic missingness, beyond random gaps.</p></div>
-  <div><span>04</span><h3>Agent generalization</h3><p>Limited testing of unfamiliar queries, failed tool orchestration, and rubric reliability.</p></div>
+  <div><span>01</span><h3>Limited imagery testing</h3><p>Tests mainly use detailed color (RGB) images. Tracking changes across images over time remains untested.</p></div>
+  <div><span>02</span><h3>Matching places and times</h3><p>Models describe different areas and time periods. Combining their outputs remains difficult.</p></div>
+  <div><span>03</span><h3>Missing population data</h3><p>Tests hide data at random. More testing is needed when whole areas lack data.</p></div>
+  <div><span>04</span><h3>Handling unfamiliar questions</h3><p>The agent needs more testing on new questions and tool failures. Answer grading also needs checks.</p></div>
 </div>
-<p class="bottom-takeaway">The authors propose broader evaluation and human expert review.</p>
+<p class="bottom-takeaway">The authors call for broader testing and review by human experts.</p>
 ```
 
 ::: {.source-line}
@@ -826,7 +641,7 @@ Bell et al., pp. 24–25, Sections 4.1–4.4; rubric limitations on p. 48.
 :::
 
 ::: {.notes}
-Pacing: 1:00. Cumulative: 27:12.
+Pacing: 1:00. Cumulative: 21:12.
 These limitations come from the authors' discussion, rather than speculative
 failures added by us. Remote-sensing evaluation focuses on RGB imagery and
 does not cover temporal downstream tasks. Population evaluations need more
@@ -839,16 +654,24 @@ the system has demonstrated reliable autonomous crisis management.
 Source: https://arxiv.org/pdf/2510.18318v4, pp. 24–25, 48.
 :::
 
-## What we learn from Earth AI {.closing .dark-slide background-color="#000000" #conclusion}
+## Earth AI summary {.closing .dark-slide background-color="#000000" #conclusion}
 
-[DISCUSSION]{.eyebrow}
+[SUMMARY]{.eyebrow}
 
 ::: {.closing-title .conclusion-title}
-Useful representations.<br>Better combined predictions.<br>[Specialized tools matter.]{.gold-text}
+Earth AI: main takeaways
 :::
 
-::: {.closing-question}
-How should we test this system on a new region or a different disaster?
+::: {.closing-summary}
+Specialized models describe the physical environment and human activity.
+
+Combining imagery and population embeddings improves many prediction tasks.
+
+Gemini coordinates data and model tools to answer geospatial questions.
+:::
+
+::: {.closing-caveat}
+Broader testing and human expert review are still needed.
 :::
 
 ::: {.closing-affiliation}
@@ -856,18 +679,30 @@ How should we test this system on a new region or a different disaster?
 :::
 
 ::: {.source-line}
-Bell et al., p. 25, Conclusion. Closing question is for our discussion.
+Bell et al., pp. 17–19, 24–25. Predictive applications, limitations, and conclusion.
 :::
 
 ::: {.notes}
-Pacing: 0:48. Cumulative: 28:00. Allow two minutes of buffer or discussion.
-Return to the three opening questions. The paper provides evidence for useful
-specialized models, complementary predictive information from combined
-representations, and higher benchmark scores when an agent receives specialized
-geospatial models and tools. The strength of each conclusion is bounded by its
-evaluation. Ask the audience how they would design evaluation for a new region
-or disaster. This is our discussion question, not a new paper result. The paper
-is Bell et al., Earth AI: Unlocking Geospatial Insights with Foundation Models
-and Cross-Modal Reasoning, arXiv:2510.18318v4, February 2026.
-Source: https://arxiv.org/pdf/2510.18318v4, p. 25 and the cited experiments.
+Pacing: 0:48. Cumulative: 22:00. Allow eight minutes of buffer or discussion.
+Close with the three main takeaways shown in the talk. Specialized models
+represent the physical environment and human activity. Combining AlphaEarth
+and Population Dynamics features improves many FEMA and health predictions,
+although gains are not universal. Gemini coordinates access to geographic data
+and specialized model tools. End with the authors' call for broader testing
+and human expert review. This slide summarizes the paper rather than posing
+a discussion question. The paper is Bell et al., Earth AI: Unlocking Geospatial
+Insights with Foundation Models and Cross-Modal Reasoning, arXiv:2510.18318v4,
+February 2026.
+Source: https://arxiv.org/pdf/2510.18318v4, pp. 17–19, 24–25.
+:::
+
+## Thank you {.closing .dark-slide .thank-you-slide background-color="#000000" #thank-you}
+
+::: {.closing-title .thank-you-title}
+[Thank you]{.gold-text}
+:::
+
+::: {.notes}
+Pacing: 0:00. Cumulative: 22:00.
+Thank the audience. Leave this slide visible during the remaining question time.
 :::
