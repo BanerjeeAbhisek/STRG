@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "node scripts/check-deck.mjs",
-    "test:preview": "node scripts/check-rstudio-preview.mjs"
+    "test:preview": "node --test scripts/wait-for-portable-export.test.mjs && node scripts/check-rstudio-preview.mjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"
